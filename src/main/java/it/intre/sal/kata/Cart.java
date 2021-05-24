@@ -13,12 +13,19 @@ final class Items {
  }
 
 public class Cart {
+    private final Map<String, Map.Entry<Integer, Integer>> offers;
+    private final Map<String, Integer> itemPrices;
+
     private int total = 0;
 
     Map<String, Integer> counters = new HashMap<>();
 
-    int computeTotal(Map<String, Map.Entry<Integer, Integer>> offers,
-                     Map<String, Integer> itemPrices) {
+    public Cart(Map<String, Map.Entry<Integer, Integer>> offers, Map<String, Integer> map) {
+        this.offers = offers;
+        itemPrices = map;
+    }
+
+    int getTotal() {
         int res = 0;
         int apple = counters.get(APPLE);
         int pear = counters.get(PEAR);
@@ -82,10 +89,6 @@ public class Cart {
         }
         return res;
     }
-    public int getTotal() {
-        return total;
-    }
-
 
     public void add(String item, int quantity) {
         counters.put(item, quantity);

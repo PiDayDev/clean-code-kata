@@ -11,7 +11,6 @@ public class UglyCheckout implements Checkout {
 
     @Override
     public int pay(List<String> items, Map<String, Entry<Integer, Integer>> offers) {
-        Cart cart = new Cart();
         Map<String, Integer> counters = new HashMap<>();
 
         Map<String, Integer> map = new HashMap<>();
@@ -29,12 +28,14 @@ public class UglyCheckout implements Checkout {
         int pear = counters.getOrDefault(PEAR, 0);
         int ananas = counters.getOrDefault(PINEAPPLE, 0);
         int banana = counters.getOrDefault(BANANA, 0);
+
+        Cart cart = new Cart(offers, map);
         cart.add(APPLE, apple);
         cart.add(PEAR, pear);
         cart.add(PINEAPPLE, ananas);
         cart.add(BANANA, banana);
 
-        return cart.computeTotal(offers, map);
+        return cart.getTotal();
     }
 
 }
