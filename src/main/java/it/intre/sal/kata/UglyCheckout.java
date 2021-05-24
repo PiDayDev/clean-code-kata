@@ -32,7 +32,7 @@ public class UglyCheckout implements Checkout {
         cart.add("pineapple", ananas);
         cart.add("banana", banana);
 
-        return Cart.computeTotal(offers, 0, map, apple, pear, ananas, banana);
+        return cart.computeTotal(offers, map);
     }
 
 }

@@ -1,14 +1,20 @@
 package it.intre.sal.kata;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Cart {
     private int total = 0;
 
-    static int computeTotal(Map<String, Map.Entry<Integer, Integer>> offers,
-                            int res,
-                            Map<String, Integer> itemPrices,
-                            int apple, int pear, int ananas, int banana) {
+    Map<String, Integer> counters = new HashMap<>();
+
+    int computeTotal(Map<String, Map.Entry<Integer, Integer>> offers,
+                     Map<String, Integer> itemPrices) {
+        int res = 0;
+        int apple = counters.get("apple");
+        int pear = counters.get("pear");
+        int ananas = counters.get("pineapple");
+        int banana = counters.get("banana");
         //Here I have to cycle through every offer to see if it applies
         for (Map.Entry entry : offers.entrySet()) {
             switch (entry.getKey().toString()) {
@@ -67,12 +73,12 @@ public class Cart {
         }
         return res;
     }
-
     public int getTotal() {
         return total;
     }
 
+
     public void add(String item, int quantity) {
-        // TODO implementami
+        counters.put(item, quantity);
     }
 }
