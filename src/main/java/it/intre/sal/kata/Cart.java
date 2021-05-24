@@ -56,11 +56,12 @@ public class Cart {
         Integer promoQuantity = promo.getKey();
         Integer promoPrice = promo.getValue();
         int promoTotal = 0;
-        int q = rest.get(item);
-        if (q >= promoQuantity) {
+        Integer qty = rest.get(item);
+        while (qty >= promoQuantity) {
             promoTotal += promoPrice;
+            qty -= promoQuantity;
         }
-        rest.put(item, rest.get(item) - promoQuantity);
+        rest.put(item, qty);
         return promoTotal;
     }
 

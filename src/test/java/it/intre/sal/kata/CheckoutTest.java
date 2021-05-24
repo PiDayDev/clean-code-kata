@@ -1,5 +1,6 @@
 package it.intre.sal.kata;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -55,6 +56,18 @@ class CheckoutTest {
 
         int expectedPrice = 60;
         assertEquals(expectedPrice, checkout.pay(forFruits(banana), withOffers(1, banana, 60)));
+    }
+
+    @Test
+    void sixApples() {
+        String apple = "apple";
+
+        Map<String, Entry<Integer, Integer>> ll = withOffers(3, apple, 111);
+
+        int expectedPrice = 222;
+        List<String> laMiaSpesa = forFruits(apple,apple,apple,apple,apple,apple);
+        assertEquals(expectedPrice, new UglyCheckout().pay(laMiaSpesa, ll));
+
     }
 
     @ParameterizedTest()
