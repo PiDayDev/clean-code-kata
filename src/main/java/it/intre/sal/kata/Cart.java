@@ -32,10 +32,9 @@ public class Cart {
 
     private int computeTotal() {
         int res = 0;
-        int apple = counters.get(APPLE);
-        int pear = counters.get(PEAR);
-        int ananas = counters.get(PINEAPPLE);
-        int banana = counters.get(BANANA);
+
+
+        Map<String, Integer> rest = new HashMap<>(counters);
         //Here I have to cycle through every offer to see if it applies
         for (Map.Entry<String, Map.Entry<Integer, Integer>> entry : offers.entrySet()) {
             String item = entry.getKey();
@@ -45,36 +44,44 @@ public class Cart {
 
             switch (item) {
                 case APPLE:
-                    int q = apple;
+                    int q = rest.get(item);
                     if (q >= promoQuantity) {
                         res += promoPrice;
                     }
-                    apple -= promoQuantity;
+                    rest.put(item,rest.get(item) - promoQuantity);
                     break;
                 case PEAR:
-                    int q2 = pear;
+                    int q2 = rest.get(item);
                     if (q2 >= promoQuantity) {
                         res += promoPrice;
                     }
-                    pear -= promoQuantity;
+                    rest.put(item,rest.get(item) - promoQuantity);
+
                     break;
                 case PINEAPPLE:
-                    int q3 = ananas;
+                    int q3 = rest.get(item);
                     if (q3 >= promoQuantity) {
                         res += promoPrice;
                     }
-                    ananas -= promoQuantity;
+                    rest.put(item,rest.get(item) - promoQuantity);
+
                     break;
                 case BANANA:
-                    int q4 = banana;
+                    int q4 = rest.get(item);
                     if (q4 >= promoQuantity) {
                         res += promoPrice;
                     }
-                    banana -= promoQuantity;
+                    rest.put(item,rest.get(item) - promoQuantity);
+
                     break;
             }
         }
 
+
+        int apple = rest.get(APPLE);
+        int pear = rest.get(PEAR);
+        int ananas = rest.get(PINEAPPLE);
+        int banana = rest.get(BANANA);
         for (Map.Entry<String, Integer> entry : itemPrices.entrySet()) {
             String item = entry.getKey();
             Integer price = entry.getValue();
