@@ -16,8 +16,6 @@ public class Cart {
     private final Map<String, Map.Entry<Integer, Integer>> offers;
     private final Map<String, Integer> itemPrices;
 
-    private int total = 0;
-
     Map<String, Integer> counters = new HashMap<>();
 
     public Cart(Map<String, Map.Entry<Integer, Integer>> offers, Map<String, Integer> map) {
@@ -32,12 +30,12 @@ public class Cart {
         int ananas = counters.get(PINEAPPLE);
         int banana = counters.get(BANANA);
         //Here I have to cycle through every offer to see if it applies
-        for (Map.Entry entry : offers.entrySet()) {
-            switch (entry.getKey().toString()) {
+        for (Map.Entry<String, Map.Entry<Integer, Integer>> entry : offers.entrySet()) {
+            switch (entry.getKey()) {
                 case APPLE:
-                    int a1 = (int) ((Map.Entry) entry.getValue()).getKey();
+                    int a1 = (entry.getValue()).getKey();
                     if (apple >= a1) {
-                        res += (int) ((Map.Entry) entry.getValue()).getValue();
+                        res += (entry.getValue()).getValue();
                     }
                     apple -= a1;
                     break;
@@ -48,46 +46,50 @@ public class Cart {
 //                    p -= a2;
 //                    break;
                 case PEAR:
-                    int a2 = (int) ((Map.Entry) entry.getValue()).getKey();
+                    int a2 = (entry.getValue()).getKey();
                     if (pear >= a2) {
-                        res += (int) ((Map.Entry) entry.getValue()).getValue();
+                        res += (entry.getValue()).getValue();
                     }
                     pear -= a2;
                     break;
                 case PINEAPPLE:
-                    int a3 = (int) ((Map.Entry) entry.getValue()).getKey();
+                    int a3 = (entry.getValue()).getKey();
                     if (ananas >= a3) {
-                        res += (int) ((Map.Entry) entry.getValue()).getValue();
+                        res += (entry.getValue()).getValue();
                     }
                     ananas -= a3;
                     break;
                 case BANANA:
-                    int a4 = (int) ((Map.Entry) entry.getValue()).getKey();
+                    int a4 = (entry.getValue()).getKey();
                     if (banana >= a4) {
-                        res += (int) ((Map.Entry) entry.getValue()).getValue();
+                        res += (entry.getValue()).getValue();
                     }
                     banana -= a4;
                     break;
             }
         }
 
-        for (Map.Entry entry : itemPrices.entrySet()) {
-            switch (entry.getKey().toString()) {
+        for (Map.Entry<String, Integer> entry : itemPrices.entrySet()) {
+            switch (entry.getKey()) {
                 case APPLE:
-                    res += apple * (int) entry.getValue();
+                    res += computeStandardTotal(apple, entry);
                     break;
                 case PEAR:
-                    res += pear * (int) entry.getValue();
+                    res += computeStandardTotal(pear, entry);
                     break;
                 case PINEAPPLE:
-                    res += ananas * (int) entry.getValue();
+                    res += computeStandardTotal(ananas, entry);
                     break;
                 case BANANA:
-                    res += banana * (int) entry.getValue();
+                    res += computeStandardTotal(banana, entry);
                     break;
             }
         }
         return res;
+    }
+
+    private int computeStandardTotal(int quantity, Map.Entry<String, Integer> entry) {
+        return quantity * entry.getValue();
     }
 
     public void add(String item, int quantity) {
