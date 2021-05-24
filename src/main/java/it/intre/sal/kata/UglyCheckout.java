@@ -10,10 +10,6 @@ public class UglyCheckout implements Checkout {
     @Override
     public int pay(List<String> items, Map<String, Entry<Integer, Integer>> offers) {
         int res = 0;
-        int a = 0;
-        int p = 0;
-        int ananas = 0;
-        int b = 0;
         Map<String, Integer> counters = new HashMap<>();
 
         Map<String, Integer> map = new HashMap<>();
@@ -27,20 +23,22 @@ public class UglyCheckout implements Checkout {
             counters.put(item, count + 1);
         }
 
-        a = counters.getOrDefault("apple", 0);
-        p = counters.getOrDefault("pear", 0);
-        ananas = counters.getOrDefault("pineapple", 0);
-        b =counters.getOrDefault("banana", 0);
+        int apple = counters.getOrDefault("apple", 0);
+        int pear = counters.getOrDefault("pear", 0);
+        int ananas = counters.getOrDefault("pineapple", 0);
+        int banana = counters.getOrDefault("banana", 0);
 
         //Here I have to cycle through every offer to see if it applies
         for (Entry entry : offers.entrySet()) {
             switch (entry.getKey().toString()) {
                 case "apple":
                     int a1 = (int) ((Entry) entry.getValue()).getKey();
-                    if (a >= a1) { res += (int) ((Entry) entry.getValue()).getValue(); }
-                    a -= a1;
+                    if (apple >= a1) {
+                        res += (int) ((Entry) entry.getValue()).getValue();
+                    }
+                    apple -= a1;
                     break;
-                    //jb 2008-09-12: don't sell lychee anymore, but maybe in the future...
+                //jb 2008-09-12: don't sell lychee anymore, but maybe in the future...
 //                case "lychee":
 //                    int a2 = (int) ((Entry) entry.getValue()).getKey();
 //                    if (p >= a2) { res += (int) ((Entry) entry.getValue()).getValue(); }
@@ -48,18 +46,24 @@ public class UglyCheckout implements Checkout {
 //                    break;
                 case "pear":
                     int a2 = (int) ((Entry) entry.getValue()).getKey();
-                    if (p >= a2) { res += (int) ((Entry) entry.getValue()).getValue(); }
-                    p -= a2;
+                    if (pear >= a2) {
+                        res += (int) ((Entry) entry.getValue()).getValue();
+                    }
+                    pear -= a2;
                     break;
                 case "pineapple":
                     int a3 = (int) ((Entry) entry.getValue()).getKey();
-                    if (ananas >= a3) { res += (int) ((Entry) entry.getValue()).getValue(); }
+                    if (ananas >= a3) {
+                        res += (int) ((Entry) entry.getValue()).getValue();
+                    }
                     ananas -= a3;
                     break;
                 case "banana":
                     int a4 = (int) ((Entry) entry.getValue()).getKey();
-                    if (b >= a4) { res += (int) ((Entry) entry.getValue()).getValue(); }
-                    b -= a4;
+                    if (banana >= a4) {
+                        res += (int) ((Entry) entry.getValue()).getValue();
+                    }
+                    banana -= a4;
                     break;
             }
         }
@@ -67,16 +71,16 @@ public class UglyCheckout implements Checkout {
         for (Entry entry : map.entrySet()) {
             switch (entry.getKey().toString()) {
                 case "apple":
-                    res += a * (int) entry.getValue();
+                    res += apple * (int) entry.getValue();
                     break;
                 case "pear":
-                    res += p * (int) entry.getValue();
+                    res += pear * (int) entry.getValue();
                     break;
                 case "pineapple":
                     res += ananas * (int) entry.getValue();
                     break;
                 case "banana":
-                    res += b * (int) entry.getValue();
+                    res += banana * (int) entry.getValue();
                     break;
             }
         }
