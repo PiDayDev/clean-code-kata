@@ -2,6 +2,7 @@ package it.intre.sal.kata;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import static it.intre.sal.kata.Items.*;
 
@@ -13,16 +14,20 @@ final class Items {
  }
 
 public class Cart {
-    private final Map<String, Map.Entry<Integer, Integer>> offers;
+    private final Map<String, Entry<Integer, Integer>> offers;
     private final Map<String, Integer> itemPrices;
 
     Map<String, Integer> counters = new HashMap<>();
 
     private int total;
 
-    public Cart(Map<String, Map.Entry<Integer, Integer>> offers, Map<String, Integer> map) {
+    public Cart(Map<String, Entry<Integer, Integer>> offers, Map<String, Integer> map) {
         this.offers = offers;
         itemPrices = map;
+    }
+
+    public void add(String item, int quantity) {
+        counters.put(item, quantity);
     }
 
     int getTotal() {
@@ -31,56 +36,45 @@ public class Cart {
     }
 
     private int computeTotal() {
-        int res = 0;
-
-
         Map<String, Integer> rest = new HashMap<>(counters);
-        //Here I have to cycle through every offer to see if it applies
-        for (Map.Entry<String, Map.Entry<Integer, Integer>> entry : offers.entrySet()) {
-            String item = entry.getKey();
-            Map.Entry<Integer, Integer> promo = entry.getValue();
-            Integer promoQuantity = promo.getKey();
-            Integer promoPrice = promo.getValue();
+        int promoTotal = getPromoTotal(rest);
+        int standardTotal = getStandardTotal(rest);
+        return promoTotal + standardTotal;
+    }
 
-            int q = rest.get(item);
-            if (q >= promoQuantity) {
-                res += promoPrice;
-            }
-            rest.put(item,rest.get(item) - promoQuantity);
-
+    private int getPromoTotal(Map<String, Integer> rest) {
+        int promoTotal = 0;
+        for (Entry<String, Entry<Integer, Integer>> itemWithPromo : offers.entrySet()) {
+            promoTotal += computeOnePromo(rest, itemWithPromo);
         }
+        return promoTotal;
+    }
 
+    private int computeOnePromo(Map<String, Integer> rest, Entry<String, Entry<Integer, Integer>> itemWithPromo) {
+        String item = itemWithPromo.getKey();
+        Entry<Integer, Integer> promo = itemWithPromo.getValue();
+        Integer promoQuantity = promo.getKey();
+        Integer promoPrice = promo.getValue();
+        int promoTotal = 0;
+        int q = rest.get(item);
+        if (q >= promoQuantity) {
+            promoTotal += promoPrice;
+        }
+        rest.put(item, rest.get(item) - promoQuantity);
+        return promoTotal;
+    }
 
-        int apple = rest.get(APPLE);
-        int pear = rest.get(PEAR);
-        int ananas = rest.get(PINEAPPLE);
-        int banana = rest.get(BANANA);
-        for (Map.Entry<String, Integer> entry : itemPrices.entrySet()) {
+    private int getStandardTotal(Map<String, Integer> rest) {
+        int tot = 0;
+        for (Entry<String, Integer> entry : itemPrices.entrySet()) {
             String item = entry.getKey();
             Integer price = entry.getValue();
-            switch (item) {
-                case APPLE:
-                    res += computeStandardTotal(apple, price);
-                    break;
-                case PEAR:
-                    res += computeStandardTotal(pear, price);
-                    break;
-                case PINEAPPLE:
-                    res += computeStandardTotal(ananas, price);
-                    break;
-                case BANANA:
-                    res += computeStandardTotal(banana, price);
-                    break;
-            }
+            tot += computeStandardTotal(rest.get(item), price);
         }
-        return res;
+        return tot;
     }
 
     private int computeStandardTotal(int quantity, Integer unitPrice) {
         return quantity * unitPrice;
-    }
-
-    public void add(String item, int quantity) {
-        counters.put(item, quantity);
     }
 }
