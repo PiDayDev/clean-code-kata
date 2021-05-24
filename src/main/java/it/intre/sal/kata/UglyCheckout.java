@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import static it.intre.sal.kata.Items.*;
+
 public class UglyCheckout implements Checkout {
 
     @Override
@@ -13,24 +15,24 @@ public class UglyCheckout implements Checkout {
         Map<String, Integer> counters = new HashMap<>();
 
         Map<String, Integer> map = new HashMap<>();
-        map.put("apple", 50);
-        map.put("pear", 30);
-        map.put("pineapple", 220);
-        map.put("banana", 60);
+        map.put(APPLE, 50);
+        map.put(PEAR, 30);
+        map.put(PINEAPPLE, 220);
+        map.put(BANANA, 60);
 
         for (String item : items) {
             Integer count = counters.getOrDefault(item, 0);
             counters.put(item, count + 1);
         }
 
-        int apple = counters.getOrDefault("apple", 0);
-        int pear = counters.getOrDefault("pear", 0);
-        int ananas = counters.getOrDefault("pineapple", 0);
-        int banana = counters.getOrDefault("banana", 0);
-        cart.add("apple", apple);
-        cart.add("pear", pear);
-        cart.add("pineapple", ananas);
-        cart.add("banana", banana);
+        int apple = counters.getOrDefault(APPLE, 0);
+        int pear = counters.getOrDefault(PEAR, 0);
+        int ananas = counters.getOrDefault(PINEAPPLE, 0);
+        int banana = counters.getOrDefault(BANANA, 0);
+        cart.add(APPLE, apple);
+        cart.add(PEAR, pear);
+        cart.add(PINEAPPLE, ananas);
+        cart.add(BANANA, banana);
 
         return cart.computeTotal(offers, map);
     }

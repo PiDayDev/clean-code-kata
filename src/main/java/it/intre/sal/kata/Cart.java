@@ -3,6 +3,15 @@ package it.intre.sal.kata;
 import java.util.HashMap;
 import java.util.Map;
 
+import static it.intre.sal.kata.Items.*;
+
+final class Items {
+     public static final String APPLE = "apple";
+     public static final String PEAR = "pear";
+     public static final String PINEAPPLE = "pineapple";
+     public static final String BANANA = "banana";
+ }
+
 public class Cart {
     private int total = 0;
 
@@ -11,14 +20,14 @@ public class Cart {
     int computeTotal(Map<String, Map.Entry<Integer, Integer>> offers,
                      Map<String, Integer> itemPrices) {
         int res = 0;
-        int apple = counters.get("apple");
-        int pear = counters.get("pear");
-        int ananas = counters.get("pineapple");
-        int banana = counters.get("banana");
+        int apple = counters.get(APPLE);
+        int pear = counters.get(PEAR);
+        int ananas = counters.get(PINEAPPLE);
+        int banana = counters.get(BANANA);
         //Here I have to cycle through every offer to see if it applies
         for (Map.Entry entry : offers.entrySet()) {
             switch (entry.getKey().toString()) {
-                case "apple":
+                case APPLE:
                     int a1 = (int) ((Map.Entry) entry.getValue()).getKey();
                     if (apple >= a1) {
                         res += (int) ((Map.Entry) entry.getValue()).getValue();
@@ -31,21 +40,21 @@ public class Cart {
 //                    if (p >= a2) { res += (int) ((Entry) entry.getValue()).getValue(); }
 //                    p -= a2;
 //                    break;
-                case "pear":
+                case PEAR:
                     int a2 = (int) ((Map.Entry) entry.getValue()).getKey();
                     if (pear >= a2) {
                         res += (int) ((Map.Entry) entry.getValue()).getValue();
                     }
                     pear -= a2;
                     break;
-                case "pineapple":
+                case PINEAPPLE:
                     int a3 = (int) ((Map.Entry) entry.getValue()).getKey();
                     if (ananas >= a3) {
                         res += (int) ((Map.Entry) entry.getValue()).getValue();
                     }
                     ananas -= a3;
                     break;
-                case "banana":
+                case BANANA:
                     int a4 = (int) ((Map.Entry) entry.getValue()).getKey();
                     if (banana >= a4) {
                         res += (int) ((Map.Entry) entry.getValue()).getValue();
@@ -57,16 +66,16 @@ public class Cart {
 
         for (Map.Entry entry : itemPrices.entrySet()) {
             switch (entry.getKey().toString()) {
-                case "apple":
+                case APPLE:
                     res += apple * (int) entry.getValue();
                     break;
-                case "pear":
+                case PEAR:
                     res += pear * (int) entry.getValue();
                     break;
-                case "pineapple":
+                case PINEAPPLE:
                     res += ananas * (int) entry.getValue();
                     break;
-                case "banana":
+                case BANANA:
                     res += banana * (int) entry.getValue();
                     break;
             }
