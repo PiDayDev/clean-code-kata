@@ -42,39 +42,12 @@ public class Cart {
             Integer promoQuantity = promo.getKey();
             Integer promoPrice = promo.getValue();
 
-            switch (item) {
-                case APPLE:
-                    int q = rest.get(item);
-                    if (q >= promoQuantity) {
-                        res += promoPrice;
-                    }
-                    rest.put(item,rest.get(item) - promoQuantity);
-                    break;
-                case PEAR:
-                    int q2 = rest.get(item);
-                    if (q2 >= promoQuantity) {
-                        res += promoPrice;
-                    }
-                    rest.put(item,rest.get(item) - promoQuantity);
-
-                    break;
-                case PINEAPPLE:
-                    int q3 = rest.get(item);
-                    if (q3 >= promoQuantity) {
-                        res += promoPrice;
-                    }
-                    rest.put(item,rest.get(item) - promoQuantity);
-
-                    break;
-                case BANANA:
-                    int q4 = rest.get(item);
-                    if (q4 >= promoQuantity) {
-                        res += promoPrice;
-                    }
-                    rest.put(item,rest.get(item) - promoQuantity);
-
-                    break;
+            int q = rest.get(item);
+            if (q >= promoQuantity) {
+                res += promoPrice;
             }
+            rest.put(item,rest.get(item) - promoQuantity);
+
         }
 
 
