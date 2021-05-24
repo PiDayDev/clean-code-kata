@@ -14,6 +14,7 @@ public class UglyCheckout implements Checkout {
         int p = 0;
         int ananas = 0;
         int b = 0;
+        Map<String, Integer> counters = new HashMap<>();
 
         Map<String, Integer> map = new HashMap<>();
         map.put("apple", 50);
@@ -22,21 +23,14 @@ public class UglyCheckout implements Checkout {
         map.put("banana", 60);
 
         for (String item : items) {
-            switch (item) {
-                case "apple":
-                    a++;
-                    break;
-                case "pear":
-                    p++;
-                    break;
-                case "pineapple":
-                    ananas++;
-                    break;
-                case "banana":
-                    b++;
-                    break;
-            }
+            Integer count = counters.getOrDefault(item, 0);
+            counters.put(item, count + 1);
         }
+
+        a = counters.getOrDefault("apple", 0);
+        p = counters.getOrDefault("pear", 0);
+        ananas = counters.getOrDefault("pineapple", 0);
+        b =counters.getOrDefault("banana", 0);
 
         //Here I have to cycle through every offer to see if it applies
         for (Entry entry : offers.entrySet()) {

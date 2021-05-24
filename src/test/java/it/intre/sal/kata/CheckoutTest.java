@@ -57,7 +57,7 @@ class CheckoutTest {
         assertEquals(expectedPrice, checkout.pay(forFruits(banana), withOffers(1, banana, 60)));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest()
     @ArgumentsSource(Checkouts.class)
     void fruits(Checkout checkout) {
         String apple = "apple";

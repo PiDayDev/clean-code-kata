@@ -15,6 +15,7 @@ repositories {
 
 dependencies {
     compile(kotlin("stdlib-jdk8"))
+    compile("javax.servlet:javax.servlet-api:3.1.0")
     testCompile("org.junit.jupiter", "junit-jupiter-api", "5.1.0")
     testCompile("org.junit.jupiter", "junit-jupiter-params", "5.1.0")
     testRuntime("org.junit.platform", "junit-platform-launcher", "1.1.0")
