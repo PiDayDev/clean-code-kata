@@ -42,38 +42,25 @@ public class UglyCheckout implements Checkout {
         }
 
 
-        //Here I have to cycle through every offer to see if it applies
-        for (Entry entry : offers.entrySet()) {
-            String item = entry.getKey().toString();
-            res = getRes(res, itemCounts, entry, item);
-        }
-
-        int apples = itemCounts.getOrDefault("apple", 0);
-        int pears = itemCounts.getOrDefault("pear", 0);
-        int pineapples = itemCounts.getOrDefault("pineapple", 0);
-        int bananas = itemCounts.getOrDefault("banana", 0);
+        res = applyOffers(res, itemCounts, offers);
 
         for (Entry entry : map.entrySet()) {
-            switch (entry.getKey().toString()) {
-                case "apple":
-                    res += apples * (int) entry.getValue();
-                    break;
-                case "pear":
-                    res += pears * (int) entry.getValue();
-                    break;
-                case "pineapple":
-                    res += pineapples * (int) entry.getValue();
-                    break;
-                case "banana":
-                    res += bananas * (int) entry.getValue();
-                    break;
-            }
+            String item = entry.getKey().toString();
+            res += itemCounts.getOrDefault(item, 0) * (int) entry.getValue();
         }
 
         return res;
     }
 
-    private int getRes(int partial, Map<String, Integer> itemCounts, Entry specialOffer, String item) {
+    private int applyOffers(int partial, Map<String, Integer> itemCounts, Map<String, Entry<Integer, Integer>> offers) {
+        for (Entry entry : offers.entrySet()) {
+            String item = entry.getKey().toString();
+            partial = applyOffer(partial, itemCounts, entry, item);
+        }
+        return partial;
+    }
+
+    private int applyOffer(int partial, Map<String, Integer> itemCounts, Entry specialOffer, String item) {
         int a1 = (int) ((Entry) specialOffer.getValue()).getKey();
         if (itemCounts.getOrDefault(item, 0) >= a1) {
             partial += (int) ((Entry) specialOffer.getValue()).getValue();
