@@ -1,9 +1,22 @@
 package it.intre.sal.kata;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+class CartProduct {
+    public final String item;
+    public final int unitPrice;
+    public final int quantity;
+
+    public CartProduct(String item, int unitPrice, int quantity) {
+        this.item = item;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+    }
+}
 
 public class UglyCheckout implements Checkout {
 
@@ -12,7 +25,9 @@ public class UglyCheckout implements Checkout {
         int res = 0;
 
         Map<String, Integer> itemCounts = new HashMap<>();
-
+        for (String item : items) {
+            itemCounts.put(item, itemCounts.getOrDefault(item, 0) + 1);
+        }
 
         Map<String, Integer> map = new HashMap<>();
         map.put("apple", 50);
@@ -20,8 +35,10 @@ public class UglyCheckout implements Checkout {
         map.put("pineapple", 220);
         map.put("banana", 60);
 
-        for (String item : items) {
-            itemCounts.put(item, itemCounts.getOrDefault(item, 0) + 1);
+        List<CartProduct> cart = new ArrayList<>();
+        for (String item : itemCounts.keySet()) {
+            CartProduct product = new CartProduct(item, map.getOrDefault(item, 0), itemCounts.getOrDefault(item, 0));
+            cart.add(product);
         }
 
 
@@ -40,12 +57,6 @@ public class UglyCheckout implements Checkout {
                     }
                     apples -= a1;
                     break;
-                //jb 2008-09-12: don't sell lychee anymore, but maybe in the future...
-//                case "lychee":
-//                    int a2 = (int) ((Entry) entry.getValue()).getKey();
-//                    if (p >= a2) { res += (int) ((Entry) entry.getValue()).getValue(); }
-//                    p -= a2;
-//                    break;
                 case "pear":
                     int a2 = (int) ((Entry) entry.getValue()).getKey();
                     if (pears >= a2) {
