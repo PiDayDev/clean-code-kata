@@ -42,44 +42,45 @@ public class UglyCheckout implements Checkout {
         }
 
 
-        int apples = itemCounts.getOrDefault("apple", 0);
-        int pears = itemCounts.getOrDefault("pear", 0);
-        int pineapples = itemCounts.getOrDefault("pineapple", 0);
-        int bananas = itemCounts.getOrDefault("banana", 0);
 
         //Here I have to cycle through every offer to see if it applies
         for (Entry entry : offers.entrySet()) {
             switch (entry.getKey().toString()) {
                 case "apple":
                     int a1 = (int) ((Entry) entry.getValue()).getKey();
-                    if (apples >= a1) {
+                    if (itemCounts.getOrDefault("apple", 0) >= a1) {
                         res += (int) ((Entry) entry.getValue()).getValue();
                     }
-                    apples -= a1;
+                    itemCounts.put("apple", itemCounts.getOrDefault("apple", 0) - a1);
                     break;
                 case "pear":
                     int a2 = (int) ((Entry) entry.getValue()).getKey();
-                    if (pears >= a2) {
+                    if (itemCounts.getOrDefault("pear", 0) >= a2) {
                         res += (int) ((Entry) entry.getValue()).getValue();
                     }
-                    pears -= a2;
+                    itemCounts.put("pear", itemCounts.getOrDefault("pear", 0) - a2);
                     break;
                 case "pineapple":
                     int a3 = (int) ((Entry) entry.getValue()).getKey();
-                    if (pineapples >= a3) {
+                    if (itemCounts.getOrDefault("pineapple", 0) >= a3) {
                         res += (int) ((Entry) entry.getValue()).getValue();
                     }
-                    pineapples -= a3;
+                    itemCounts.put("pineapple", itemCounts.getOrDefault("pineapple", 0) - a3);
                     break;
                 case "banana":
                     int a4 = (int) ((Entry) entry.getValue()).getKey();
-                    if (bananas >= a4) {
+                    if (itemCounts.getOrDefault("banana", 0) >= a4) {
                         res += (int) ((Entry) entry.getValue()).getValue();
                     }
-                    bananas -= a4;
+                    itemCounts.put("banana", itemCounts.getOrDefault("banana", 0) - a4);
                     break;
             }
         }
+
+        int apples = itemCounts.getOrDefault("apple", 0);
+        int pears = itemCounts.getOrDefault("pear", 0);
+        int pineapples = itemCounts.getOrDefault("pineapple", 0);
+        int bananas = itemCounts.getOrDefault("banana", 0);
 
         for (Entry entry : map.entrySet()) {
             switch (entry.getKey().toString()) {
