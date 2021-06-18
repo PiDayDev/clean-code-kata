@@ -10,10 +10,10 @@ public class UglyCheckout implements Checkout {
     @Override
     public int pay(List<String> items, Map<String, Entry<Integer, Integer>> offers) {
         int res = 0;
-        int a = 0;
-        int p = 0;
-        int ananas = 0;
-        int b = 0;
+        int apples = 0;
+        int pears = 0;
+        int pineapples = 0;
+        int bananas = 0;
 
         Map<String, Integer> map = new HashMap<>();
         map.put("apple", 50);
@@ -24,16 +24,16 @@ public class UglyCheckout implements Checkout {
         for (String item : items) {
             switch (item) {
                 case "apple":
-                    a++;
+                    apples++;
                     break;
                 case "pear":
-                    p++;
+                    pears++;
                     break;
                 case "pineapple":
-                    ananas++;
+                    pineapples++;
                     break;
                 case "banana":
-                    b++;
+                    bananas++;
                     break;
             }
         }
@@ -43,8 +43,8 @@ public class UglyCheckout implements Checkout {
             switch (entry.getKey().toString()) {
                 case "apple":
                     int a1 = (int) ((Entry) entry.getValue()).getKey();
-                    if (a >= a1) { res += (int) ((Entry) entry.getValue()).getValue(); }
-                    a -= a1;
+                    if (apples >= a1) { res += (int) ((Entry) entry.getValue()).getValue(); }
+                    apples -= a1;
                     break;
                     //jb 2008-09-12: don't sell lychee anymore, but maybe in the future...
 //                case "lychee":
@@ -54,18 +54,18 @@ public class UglyCheckout implements Checkout {
 //                    break;
                 case "pear":
                     int a2 = (int) ((Entry) entry.getValue()).getKey();
-                    if (p >= a2) { res += (int) ((Entry) entry.getValue()).getValue(); }
-                    p -= a2;
+                    if (pears >= a2) { res += (int) ((Entry) entry.getValue()).getValue(); }
+                    pears -= a2;
                     break;
                 case "pineapple":
                     int a3 = (int) ((Entry) entry.getValue()).getKey();
-                    if (ananas >= a3) { res += (int) ((Entry) entry.getValue()).getValue(); }
-                    ananas -= a3;
+                    if (pineapples >= a3) { res += (int) ((Entry) entry.getValue()).getValue(); }
+                    pineapples -= a3;
                     break;
                 case "banana":
                     int a4 = (int) ((Entry) entry.getValue()).getKey();
-                    if (b >= a4) { res += (int) ((Entry) entry.getValue()).getValue(); }
-                    b -= a4;
+                    if (bananas >= a4) { res += (int) ((Entry) entry.getValue()).getValue(); }
+                    bananas -= a4;
                     break;
             }
         }
@@ -73,16 +73,16 @@ public class UglyCheckout implements Checkout {
         for (Entry entry : map.entrySet()) {
             switch (entry.getKey().toString()) {
                 case "apple":
-                    res += a * (int) entry.getValue();
+                    res += apples * (int) entry.getValue();
                     break;
                 case "pear":
-                    res += p * (int) entry.getValue();
+                    res += pears * (int) entry.getValue();
                     break;
                 case "pineapple":
-                    res += ananas * (int) entry.getValue();
+                    res += pineapples * (int) entry.getValue();
                     break;
                 case "banana":
-                    res += b * (int) entry.getValue();
+                    res += bananas * (int) entry.getValue();
                     break;
             }
         }
