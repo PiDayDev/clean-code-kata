@@ -42,7 +42,7 @@ public class UglyCheckout implements Checkout {
         }
 
 
-        res = applyOffers(res, itemCounts, offers);
+        res += applyOffers(itemCounts, offers);
 
         for (Entry<String, Integer> entry : map.entrySet()) {
             String item = entry.getKey();
@@ -52,15 +52,17 @@ public class UglyCheckout implements Checkout {
         return res;
     }
 
-    private int applyOffers(int partial, Map<String, Integer> itemCounts, Map<String, Entry<Integer, Integer>> offers) {
+    private int applyOffers(Map<String, Integer> itemCounts, Map<String, Entry<Integer, Integer>> offers) {
+        int partial=0;
         for (Entry<String, Entry<Integer, Integer>> entry : offers.entrySet()) {
             String item = entry.getKey();
-            partial = applyOffer(partial, itemCounts, entry, item);
+            partial += applyOffer(itemCounts, entry, item);
         }
         return partial;
     }
 
-    private int applyOffer(int partial, Map<String, Integer> itemCounts, Entry<String, Entry<Integer, Integer>> specialOffer, String item) {
+    private int applyOffer(Map<String, Integer> itemCounts, Entry<String, Entry<Integer, Integer>> specialOffer, String item) {
+        int partial = 0;
         int a1 = specialOffer.getValue().getKey();
         if (itemCounts.getOrDefault(item, 0) >= a1) {
             partial += specialOffer.getValue().getValue();
