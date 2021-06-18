@@ -42,39 +42,10 @@ public class UglyCheckout implements Checkout {
         }
 
 
-
         //Here I have to cycle through every offer to see if it applies
         for (Entry entry : offers.entrySet()) {
-            switch (entry.getKey().toString()) {
-                case "apple":
-                    int a1 = (int) ((Entry) entry.getValue()).getKey();
-                    if (itemCounts.getOrDefault("apple", 0) >= a1) {
-                        res += (int) ((Entry) entry.getValue()).getValue();
-                    }
-                    itemCounts.put("apple", itemCounts.getOrDefault("apple", 0) - a1);
-                    break;
-                case "pear":
-                    int a2 = (int) ((Entry) entry.getValue()).getKey();
-                    if (itemCounts.getOrDefault("pear", 0) >= a2) {
-                        res += (int) ((Entry) entry.getValue()).getValue();
-                    }
-                    itemCounts.put("pear", itemCounts.getOrDefault("pear", 0) - a2);
-                    break;
-                case "pineapple":
-                    int a3 = (int) ((Entry) entry.getValue()).getKey();
-                    if (itemCounts.getOrDefault("pineapple", 0) >= a3) {
-                        res += (int) ((Entry) entry.getValue()).getValue();
-                    }
-                    itemCounts.put("pineapple", itemCounts.getOrDefault("pineapple", 0) - a3);
-                    break;
-                case "banana":
-                    int a4 = (int) ((Entry) entry.getValue()).getKey();
-                    if (itemCounts.getOrDefault("banana", 0) >= a4) {
-                        res += (int) ((Entry) entry.getValue()).getValue();
-                    }
-                    itemCounts.put("banana", itemCounts.getOrDefault("banana", 0) - a4);
-                    break;
-            }
+            String item = entry.getKey().toString();
+            res = getRes(res, itemCounts, entry, item);
         }
 
         int apples = itemCounts.getOrDefault("apple", 0);
@@ -100,5 +71,14 @@ public class UglyCheckout implements Checkout {
         }
 
         return res;
+    }
+
+    private int getRes(int partial, Map<String, Integer> itemCounts, Entry specialOffer, String item) {
+        int a1 = (int) ((Entry) specialOffer.getValue()).getKey();
+        if (itemCounts.getOrDefault(item, 0) >= a1) {
+            partial += (int) ((Entry) specialOffer.getValue()).getValue();
+        }
+        itemCounts.put(item, itemCounts.getOrDefault(item, 0) - a1);
+        return partial;
     }
 }
